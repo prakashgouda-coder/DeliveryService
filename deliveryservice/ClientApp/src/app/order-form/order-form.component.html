@@ -1,0 +1,81 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Order delivery form</h1>
+    <form (ngSubmit)="onSubmit()" #deliveryForm="ngForm">
+
+      <div class="form-group">
+        <label for="name">Enter distance (kms)</label>
+        <input type="text" class="form-control" id="distance" required [(ngModel)]="models.distance"
+               (keypress)="numberOnly($event)" name="distance" #distance="ngModel">
+        <div [hidden]="distance.valid || distance.pristine" class="alert alert-danger">
+          Distance is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="power">Stairs</label>
+        <select class="form-control" id="stair" required [(ngModel)]="models.stair" name="stair" #stair="ngModel">
+          <option *ngFor="let floor of stairs" [value]="floor">{{floor}}</option>
+        </select>
+        <div [hidden]="stair.valid || stair.pristine" class="alert alert-danger">
+          Floor is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="power">Is weekend</label>
+        <select class="form-control" id="weekend" required [(ngModel)]="models.weekend" name="weekend"
+                #weekend="ngModel">
+          <option *ngFor="let wk of weekends" [value]="wk">{{wk}}</option>
+        </select>
+        <div [hidden]="weekend.valid || weekend.pristine" class="alert alert-danger">
+          This field is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="power">Customer type</label>
+        <select class="form-control" id="custtype" required [(ngModel)]="models.custtype" name="custtype"
+                #custtype="ngModel">
+          <option *ngFor="let custmer of customerTypes" [value]="custmer">{{custmer}}</option>
+        </select>
+        <div [hidden]="custtype.valid || custtype.pristine" class="alert alert-danger">
+          This field is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="power">Coupon</label>
+        <select class="form-control" id="coupon" required [(ngModel)]="models.coupon" name="coupon" #coupon="ngModel">
+          <option *ngFor="let item of coupons" [value]="item">{{item}}</option>
+        </select>
+        <div [hidden]="coupon.valid || coupon.pristine" class="alert alert-danger">
+          This field is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!deliveryForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-success" (click)="getOrder()">get order</button>
+
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You submitted the following order:</h2>
+    <div class="row">
+      <div class="col-xs-3">Distance</div>
+      <div class="col-xs-9">{{ models.distance }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Stairs/floor</div>
+      <div class="col-xs-9">{{ models.stair }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Weekend</div>
+      <div class="col-xs-9">{{ models.weekend }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+    <button class="btn btn-primary" (click)="submitted=false">Cancel</button>
+  </div>
+</div>
